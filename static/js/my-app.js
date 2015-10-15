@@ -48,6 +48,8 @@ function createContentPage() {
     return;
 }
 
+//-------------------------------------------------------------
+
 // 加载flag
 var loading = false;
 
@@ -55,10 +57,7 @@ var loading = false;
 var lastIndex = $$('.list-block li').length;
 
 // 最多可加载的条目
-var maxItems = 60;
-
-// 每次加载添加多少条目
-var itemsPerLoad = 20;
+var maxItems = 100;
 
 // 注册'infinite'事件处理函数
 $$('.infinite-scroll').on('infinite', function() {
@@ -78,16 +77,42 @@ $$('.infinite-scroll').on('infinite', function() {
             return;
         }
 
-        // 生成新条目的HTML
         var html = '';
-        for (var i = lastIndex + 1; i <= lastIndex + itemsPerLoad; i++) {
-            html += '<li class="item-content"><div class="item-inner"><div class="item-title">Item ' + i + '</div></div></li>';
+
+        //获取新记录
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                records = JSON.parse(xmlhttp.responseText);
+                for (i in records) {
+                    html += '<li>' +
+                        '<a href="views/details.html" class="item-link">' +
+                        '<div class="item-content">' +
+                        '<div class="item-media">' +
+                        '<img src="' + records[i].ItempicPath +'" height="80"></div>' +
+                        '<div class="item-inner">' +
+                        '<div class="item-title-row">' +
+                        '<div class="item-title">' + records[i].Title +'</div>' +
+                        '<div class="item-after">' + records[i].Date +'</div>' +
+                        '</div>' +
+                        '<div class="item-subtitle">' + records[i].Category +'</div>' +
+                        '<div class="item-text">' + records[i].Summary +'</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</a>' +
+                        '</li>'
+                }
+                // 添加新条目
+                $$('.list-block ul').append(html);
+
+                // 更新最后加载的序号
+                lastIndex = $$('.list-block li').length;
+            }
         }
+        xmlhttp.open("GET", "/api/list/" + lastIndex, true);
+        xmlhttp.send();
 
-        // 添加新条目
-        $$('.list-block ul').append(html);
-
-        // 更新最后加载的序号
-        lastIndex = $$('.list-block li').length;
     }, 1000);
 });
+
+//-------------------------------------------------------------

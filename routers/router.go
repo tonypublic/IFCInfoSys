@@ -1,10 +1,14 @@
 package routers
 
 import (
-	"ifcinfosys/controllers"
 	"github.com/astaxie/beego"
+	"ifcinfosys/controllers"
 )
 
 func init() {
-    beego.Router("/", &controllers.MainController{})
+	//静态页面
+	beego.Router("/", &controllers.MainController{})
+
+	//api
+	beego.Include(&controllers.CMSController{})
 }
