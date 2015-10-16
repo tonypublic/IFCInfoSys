@@ -1,13 +1,17 @@
-
 <!-- We don't need full layout here, because this page will be parsed with Ajax-->
 <!-- Top Navbar-->
 <div class="navbar">
   <div class="navbar-inner">
-    <div class="left"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+    <div class="left">
+      <a href="#" class="back link"> <i class="icon icon-back"></i>
+        <span>Back</span>
+      </a>
+    </div>
     <div class="center sliding">详细内容</div>
     <div class="right">
       <!-- Right link contains only icon - additional "icon-only" class-->
-      <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+      <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i>
+      </a>
     </div>
   </div>
 </div>
@@ -16,8 +20,19 @@
   <div data-page="about" class="page">
     <!-- Scrollable page content-->
     <div class="page-content">
-      <div class="content-block">
-        <div class="content-block-inner">{{.content}}</div>
+      <div class="card demo-card-header-pic">
+        <div style="background-image:url(db/onlineactive/l00001/head.jpg)" valign="bottom" class="card-header color-white no-border">{{.title}}</div>
+        <div class="card-content">
+          <div class="card-content-inner">
+            <p class="color-gray">Posted on {{.date}}</p>
+            <p><span class="category">{{.category}}</span></p>
+            <p>{{str2html .content}}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="link">Like</a>
+          <a href="#" class="link">Read more</a>
+        </div>
       </div>
     </div>
   </div>
