@@ -3,7 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	models "models/models"
+	"ifcinfosys/models"
 	"strconv"
 )
 
@@ -55,10 +55,10 @@ type CMSController struct {
 }
 
 func (this *CMSController) URLMapping() {
-	this.Mapping("api/list", this.ListAddedRecords)
-	this.Mapping("/api/details", this.ViewDetails)
+	this.Mapping("api/list/", this.ListAddedRecords)
+	this.Mapping("/api/details/", this.ViewDetails)
 	//CRUD操作
-	this.Mapping("/api/manage/add", this.AddItem)
+	this.Mapping("/api/manage/add/", this.AddItem)
 	this.Mapping("/api/manage/update", this.UpdateItem)
 	this.Mapping("/api/manage/delete", this.DeleteItem)
 }
@@ -111,26 +111,27 @@ func (this *CMSController) ViewDetails() {
 	this.TplNames = "details.html"
 }
 
-// @router /api/manage/add:itemno [post]
+// @router /api/manage/add/:itemno [get]
 func (this *CMSController) AddItem() {
-	itemno, _ := this.GetInt(":itemno")
+	itemno := this.GetString(":itemno")
 	fmt.Println(itemno)
 
-	o := orm.NewOrm()
-	o.using("default")
+	var item = new(models.OnLineActive)
+	item.GetItem(itemno)
 
+	this.Ctx.WriteString(itemno)
 }
 
-// @router /api/manage/update:itemno [post]
+// @router /api/manage/update/:itemno [post]
 func (this *CMSController) UpdateItem() {
-	itemno, _ := this.GetInt(":itemno")
+	itemno := this.GetString(":itemno")
 	fmt.Println(itemno)
 
 }
 
-// @router /api/manage/delete:itemno [get]
+// @router /api/manage/delete/:itemno [get]
 func (this *CMSController) DeleteItem() {
-	itemno, _ := this.GetInt(":itemno")
+	itemno := this.GetString(":itemno")
 	fmt.Println(itemno)
 
 }

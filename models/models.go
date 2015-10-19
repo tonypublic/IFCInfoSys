@@ -1,19 +1,20 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/mattn/go-sqlite3"
 )
 
 type SummaryList struct {
-	No         string
+	No         string `orm:"pk"`
 	Type       string
 	Updatetime string
 	Pageviewed int
 }
 
 type OnLineActive struct {
-	No       string
+	No       string `orm:"pk"`
 	Title    string
 	Category string
 	Date     string
@@ -24,7 +25,7 @@ type OnLineActive struct {
 }
 
 type Bulletin struct {
-	No        string
+	No        string `orm:"pk"`
 	Title     string
 	Category  string
 	Begintime string
@@ -35,7 +36,7 @@ type Bulletin struct {
 }
 
 type Project struct {
-	No        string
+	No        string `orm:"pk"`
 	Title     string
 	Category  string
 	Begintime string
@@ -57,4 +58,22 @@ func init() {
 
 	// 需要在init中注册定义的model
 	orm.RegisterModel(new(SummaryList), new(OnLineActive), new(Bulletin), new(Project))
+}
+
+func (item *OnLineActive) GetItem(no string) {
+	o := orm.NewOrm()
+	item = new(OnLineActive)
+	item.No = no
+	err := o.Read(item)
+	if err == orm.ErrNoRows {
+		fmt.Println("查询不到")
+	} else if err == orm.ErrMissPK {
+		fmt.Println("找不到主键")
+	} else {
+		fmt.Println(item.No, item.Title)
+	}
+}
+
+func (item *OnLineActive) AddItem() {
+
 }
