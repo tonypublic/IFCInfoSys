@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	models "models/models"
 	"strconv"
 )
 
@@ -56,6 +57,10 @@ type CMSController struct {
 func (this *CMSController) URLMapping() {
 	this.Mapping("api/list", this.ListAddedRecords)
 	this.Mapping("/api/details", this.ViewDetails)
+	//CRUD操作
+	this.Mapping("/api/manage/add", this.AddItem)
+	this.Mapping("/api/manage/update", this.UpdateItem)
+	this.Mapping("/api/manage/delete", this.DeleteItem)
 }
 
 // @router /api/list/:lastindex [get]
@@ -104,4 +109,28 @@ func (this *CMSController) ViewDetails() {
 		"<p>" + content + "</p></div>"
 
 	this.TplNames = "details.html"
+}
+
+// @router /api/manage/add:itemno [post]
+func (this *CMSController) AddItem() {
+	itemno, _ := this.GetInt(":itemno")
+	fmt.Println(itemno)
+
+	o := orm.NewOrm()
+	o.using("default")
+
+}
+
+// @router /api/manage/update:itemno [post]
+func (this *CMSController) UpdateItem() {
+	itemno, _ := this.GetInt(":itemno")
+	fmt.Println(itemno)
+
+}
+
+// @router /api/manage/delete:itemno [get]
+func (this *CMSController) DeleteItem() {
+	itemno, _ := this.GetInt(":itemno")
+	fmt.Println(itemno)
+
 }
