@@ -21,12 +21,12 @@
     <!-- Scrollable page content-->
     <div class="page-content">
       <div class="card demo-card-header-pic">
-        <div style="background-image:url(db/onlineactive/l00001/head.jpg)" valign="bottom" class="card-header color-white no-border">{{.title}}</div>
+        <div style="background-image:url({{.itemdetails.Head}})" valign="bottom" class="card-header color-white no-border">{{.itemdetails.Title}}</div>
         <div class="card-content">
           <div class="card-content-inner">
-            <p class="color-gray">Posted on {{.date}}</p>
-            <p><span class="category">{{.category}}</span></p>
-            <p>{{str2html .content}}</p>
+            <p><span class="category">{{.itemdetails.Category}}</span></p>
+            <p class="color-gray">Posted on {{.itemdetails.Date}}</p>
+            <p>{{str2html .itemdetails.Content}}</p>
           </div>
         </div>
         <div class="card-footer">

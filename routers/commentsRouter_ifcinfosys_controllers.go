@@ -16,7 +16,7 @@ func init() {
 	beego.GlobalControllerRouter["ifcinfosys/controllers:CMSController"] = append(beego.GlobalControllerRouter["ifcinfosys/controllers:CMSController"],
 		beego.ControllerComments{
 			"ViewDetails",
-			`/api/details/:recordno`,
+			`/api/details/:itemno`,
 			[]string{"get"},
 			nil})
 

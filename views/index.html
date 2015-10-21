@@ -54,12 +54,12 @@
             <div class="content-block-title">活动记录</div>
             <div class="list-block media-list">
               <ul>
-                {{range .records}}
+                {{range .items}}
                 <li>
-                  <a href="/api/details/100" class="item-link">
+                  <a href="/api/details/{{.No}}" class="item-link">
                     <div class="item-content">
                       <div class="item-media">
-                        <img src="{{.ItempicPath}}" height="80"></div>
+                        <img src="{{.Thumbnails}}" height="80"></div>
                       <div class="item-inner">
                         <div class="item-title-row">
                           <div class="item-title">{{.Title}}</div>

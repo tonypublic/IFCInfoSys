@@ -1,16 +1,19 @@
 package models
 
 import (
-	"fmt"
+	// "fmt"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type SummaryList struct {
+type VItemList struct {
 	No         string `orm:"pk"`
 	Type       string
 	Updatetime string
 	Pageviewed int
+	Title      string
+	Category   string
+	Summary    string
 }
 
 type OnLineActive struct {
@@ -57,23 +60,19 @@ func init() {
 	orm.RegisterDataBase("default", "sqlite3", "db/ifcdb.db", maxIdle, maxConn)
 
 	// 需要在init中注册定义的model
-	orm.RegisterModel(new(SummaryList), new(OnLineActive), new(Bulletin), new(Project))
+	orm.RegisterModel(new(VItemList), new(OnLineActive))
 }
 
-func (item *OnLineActive) GetItem(no string) {
+//获取信息列表
+func GetItems() (items []VItemList, err error) {
 	o := orm.NewOrm()
-	item = new(OnLineActive)
-	item.No = no
-	err := o.Read(item)
-	if err == orm.ErrNoRows {
-		fmt.Println("查询不到")
-	} else if err == orm.ErrMissPK {
-		fmt.Println("找不到主键")
-	} else {
-		fmt.Println(item.No, item.Title)
-	}
+	_, err = o.Raw("SELECT * FROM v_item_list").QueryRows(&items)
+	return
 }
 
-func (item *OnLineActive) AddItem() {
-
+//返回一项记录的详细信息
+func (this *OnLineActive) Get() (err error) {
+	o := orm.NewOrm()
+	err = o.Read(this)
+	return
 }
