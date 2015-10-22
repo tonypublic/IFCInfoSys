@@ -57,8 +57,6 @@ func (this *ViewItemDetails) Get() (err error) {
 
 	default:
 	}
-	fmt.Println(this.Title)
-
 	return
 }
 

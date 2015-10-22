@@ -65,8 +65,8 @@ func init() {
 
 //获取信息列表
 func GetItems() (items []VItemList, err error) {
-	o := orm.NewOrm()
-	_, err = o.Raw("SELECT * FROM v_item_list").QueryRows(&items)
+	qs := orm.NewOrm().QueryTable("v_item_list")
+	_, err = qs.Limit(10, 0).All(&items)
 	return
 }
 

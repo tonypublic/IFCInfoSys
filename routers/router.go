@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-	//静态页面
+	//首页
 	beego.Router("/", &controllers.MainController{})
 
 	//api
