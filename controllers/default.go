@@ -25,7 +25,6 @@ type CMSController struct {
 }
 
 func (this *CMSController) URLMapping() {
-	//api
 	this.Mapping("/api/list/", this.ListAddedRecords)
 	this.Mapping("/api/details/", this.ViewDetails)
 	//CRUD操作
