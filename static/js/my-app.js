@@ -86,17 +86,17 @@ $$('.infinite-scroll').on('infinite', function() {
                 records = JSON.parse(xmlhttp.responseText);
                 for (i in records) {
                     html += '<li>' +
-                        '<a href="views/details.html" class="item-link">' +
+                        '<a href="/api/details/' + records[i].No + '" class="item-link">' +
                         '<div class="item-content">' +
                         '<div class="item-media">' +
-                        '<img src="' + records[i].ItempicPath +'" height="80"></div>' +
+                        '<img src="' + records[i].Thumbnails + '" height="80"></div>' +
                         '<div class="item-inner">' +
                         '<div class="item-title-row">' +
-                        '<div class="item-title">' + records[i].Title +'</div>' +
-                        '<div class="item-after">' + records[i].Date +'</div>' +
+                        '<div class="item-title">' + records[i].Title + '</div>' +
+                        '<div class="item-after">' + records[i].Date + '</div>' +
                         '</div>' +
-                        '<div class="item-subtitle">' + records[i].Category +'</div>' +
-                        '<div class="item-text">' + records[i].Summary +'</div>' +
+                        '<div class="item-subtitle"><span class="category">' + records[i].Category + '</span></div>' +
+                        '<div class="item-text">' + records[i].Summary + '</div>' +
                         '</div>' +
                         '</div>' +
                         '</a>' +

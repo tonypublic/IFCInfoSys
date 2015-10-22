@@ -5,6 +5,7 @@ package datahandlers
 
 import (
 	"ifcinfosys/models"
+	"strings"
 )
 
 //活动列表
@@ -35,7 +36,7 @@ func GetViewItems() (viewItems []viewItem, err error) {
 		for _, item := range items {
 			vitem.No = item.No
 			vitem.Title = item.Title
-			vitem.Date = item.Updatetime
+			vitem.Date = strings.Fields(item.Updatetime)[0]
 			vitem.Category = item.Type + " | " + item.Category
 			vitem.Summary = item.Summary
 			vitem.Thumbnails = getPathByType(item.Type) + item.No + "/thumbnails.jpg"
@@ -65,7 +66,7 @@ func getOnLineActiveDetail(vid *ViewItemDetails) (err error) {
 	err = oad.Get()
 	if err == nil {
 		vid.Title = oad.Title
-		vid.Date = oad.Date
+		vid.Date = strings.Fields(oad.Date)[0]
 		vid.Category = getItemType(vid.No) + " | " + oad.Category
 		vid.Content = "<p><strong>" + "嘉宾: " + oad.Hosts + "</strong></p>" +
 			"<p><strong>" + "主持: " + oad.Guests + "</strong></p>" +
