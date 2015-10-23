@@ -80,11 +80,11 @@ func getOnLineActiveDetail(vid *ViewItemDetails) (err error) {
 //通过编号区别信息分类
 func getItemType(no string) (t string) {
 	switch no[0] {
-	case 'L':
+	case 'l':
 		t = "线上活动"
-	case 'P':
+	case 'p':
 		t = "项目信息"
-	case 'B':
+	case 'b':
 		t = "公告信息"
 	default:
 		t = "其他"
@@ -98,9 +98,9 @@ func getPathByType(t string) (dir string) {
 	case "线上活动":
 		dir = "db/onlineactive/"
 	case "项目信息":
-		dir = "db/Project/"
+		dir = "db/project/"
 	case "公告信息":
-		dir = "db/Bulletin/"
+		dir = "db/bulletin/"
 	}
 	return
 }
