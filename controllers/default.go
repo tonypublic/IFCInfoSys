@@ -12,7 +12,7 @@ type MainController struct {
 }
 
 func (this *MainController) Get() {
-	items, err := datahandlers.GetViewItems()
+	items, err := datahandlers.GetViewItems(0)
 	if err == nil {
 		this.Data["items"] = items
 		this.TplNames = "index.html"
@@ -35,9 +35,9 @@ func (this *CMSController) URLMapping() {
 
 // @router /api/list/:lastindex [get]
 func (this *CMSController) ListAddedRecords() {
-	// lastindex, _ := this.GetInt(":lastindex")
+	lastindex, _ := this.GetInt(":lastindex")
 
-	items, err := datahandlers.GetViewItems()
+	items, err := datahandlers.GetViewItems(lastindex)
 	if err == nil {
 		this.Data["json"] = &items
 		this.ServeJson()

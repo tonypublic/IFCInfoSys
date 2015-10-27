@@ -29,8 +29,8 @@ type ViewItemDetails struct {
 }
 
 //获取信息列表
-func GetViewItems() (viewItems []viewItem, err error) {
-	items, err := models.GetItems()
+func GetViewItems(pos int) (viewItems []viewItem, err error) {
+	items, err := models.GetItems(pos)
 	if err == nil {
 		vitem := new(viewItem)
 		for _, item := range items {

@@ -65,6 +65,7 @@ $$('.infinite-scroll').on('infinite', function() {
     if (loading) return;
     // 设置flag
     loading = true;
+
     // 模拟1s的加载过程
     setTimeout(function() {
         // 重置加载flag
@@ -84,6 +85,18 @@ $$('.infinite-scroll').on('infinite', function() {
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 records = JSON.parse(xmlhttp.responseText);
+                if (records == null) {
+                    // 加载完毕，则注销无限加载事件，以防不必要的加载
+                    myApp.detachInfiniteScroll($$('.infinite-scroll'));
+                    // 删除加载提示符
+                    $$('.infinite-scroll-preloader').remove();
+
+                    // html='<div>已经没有更多内容了</div>';
+                    html = '<div class="content-block-title" style="text-align:center">已经没有更多内容了!</div>'
+                    $$('.list-block').append(html);
+
+                    return;
+                }
                 for (i in records) {
                     html += '<li>' +
                         '<a href="/api/details/' + records[i].No + '" class="item-link">' +
