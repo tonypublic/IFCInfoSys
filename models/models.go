@@ -1,7 +1,7 @@
 package models
 
 import (
-	// "fmt"
+	"fmt"
 	"github.com/astaxie/beego/cache"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/mattn/go-sqlite3"
@@ -51,7 +51,8 @@ type Project struct {
 	Phase     string
 }
 
-var cacheItem
+//全局缓存
+var bm cache.Cache
 
 func init() {
 	orm.RegisterDriver("sqlite", orm.DR_Sqlite)
@@ -66,15 +67,21 @@ func init() {
 	orm.RegisterModel(new(VItemList), new(OnLineActive))
 
 	//设定一个缓存，保存最初始的ItemList，避免每次打开主页就去读取数据库
-	cacheItem, err := cache.NewCache("memory", `{"interval":60}`)
+	bm, _ = cache.NewCache("memory", `{"interval":60}`)
 }
 
 //获取信息列表, pos为查询的起始记录号
 func GetItems(pos int) (items []VItemList, err error) {
-	qs := orm.NewOrm().QueryTable("v_item_list")
+	//如果是首页，先查看缓存，缓存中不存在再从数据库中取数据
+	if pos == 0 && bm.IsExist("vitemlists") {
+		items, _ = bm.Get("vitemlists").([]VItemList)
+	} else {
+		qs := orm.NewOrm().QueryTable("v_item_list")
 
-	//每次取出的记录数为7
-	_, err = qs.Limit(7, pos).All(&items)
+		//每次取出的记录数为7
+		_, err = qs.Limit(7, pos).All(&items)
+		bm.Put("vitemlists", items, 60)
+	}
 	return
 }
 
