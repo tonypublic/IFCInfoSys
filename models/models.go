@@ -75,12 +75,19 @@ func GetItems(pos int) (items []VItemList, err error) {
 	//如果是首页，先查看缓存，缓存中不存在再从数据库中取数据
 	if pos == 0 && bm.IsExist("vitemlists") {
 		items, _ = bm.Get("vitemlists").([]VItemList)
+		fmt.Println("从缓存中取数据！！")
 	} else {
 		qs := orm.NewOrm().QueryTable("v_item_list")
 
 		//每次取出的记录数为7
 		_, err = qs.Limit(7, pos).All(&items)
-		bm.Put("vitemlists", items, 60)
+		fmt.Println("从数据库中取数据！！!")
+
+		//如果是首页数据，就把数据放入缓存
+		if pos == 0 {
+			bm.Put("vitemlists", items, 60)
+			fmt.Println("将数据放入缓存！！!")
+		}
 	}
 	return
 }

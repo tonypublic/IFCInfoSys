@@ -62,7 +62,7 @@ func (this *ViewItemDetails) Get() (err error) {
 }
 
 func getOnLineActiveDetail(vid *ViewItemDetails) (err error) {
-	oad := &models.OnLineActive{No: vid.No}
+	oad := models.OnLineActive{No: vid.No}
 	err = oad.Get()
 	if err == nil {
 		vid.Title = oad.Title
